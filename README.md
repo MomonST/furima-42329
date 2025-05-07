@@ -37,7 +37,7 @@ Things you may want to cover:
 | first_name         | string | null: false |
 | last_name_kana     | string | null: false |
 | first_name_kana    | string | null: false |
-| birth_date         | string | null: false |
+| birth_date         | date   | null: false |
 
 has_many :items
 has_many :orders
@@ -54,7 +54,7 @@ has_many :orders
 | prefecture_id    | integer | null: false |  （発送元地域, ActiveHash）
 | delivery_time_id | integer | null: false |  （発送までの日数,ActiveHash）
 | item_price       | integer | null: false |   （300〜9,999,999 円の範囲）
-| user_id          | references | null: false, foreign_key: true | （出品者）
+| user             | references | null: false, foreign_key: true | （出品者）
 
 belongs_to :user
 has_one :order
@@ -64,8 +64,8 @@ has_one :order
 
 | Column  | Type       | Options                        |
 | ------- | ---------- | ------------------------------ |
-| user_id | references | null: false, foreign_key: true |   （購入者）
-| item_id | references | null: false, foreign_key: true |  　(購入商品)
+| user    | references | null: false, foreign_key: true |   （購入者）
+| item    | references | null: false, foreign_key: true |  　(購入商品)
 
 belongs_to :user
 belongs_to :item
@@ -76,7 +76,7 @@ has_one :shipping_address
 
 | Column        | Type       | Options     |
 | ------------- | ---------- | ----------- |
-| order_id      | references | null: false |
+| order         | references | null: false |
 | postal_code   | string     | null: false | 
 | prefecture_id | integer    | null: false |
 | city          | string     | null: false |
