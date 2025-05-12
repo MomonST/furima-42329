@@ -1,10 +1,10 @@
 class ItemsController < ApplicationController
   # before_action :move_to_index, except: [:index, :show]
+  before_action :authenticate_user!, only: [:new, :create]
 
   def index
     @item = Item.new
-    @user = User.find(params[:user_id])
-    @items = @user.items.includes(:user)
+    @items = Item.order("created_at DESC").includes(:user)
   end
 
   def new
@@ -12,13 +12,11 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @user = User.find(params[:user_id])
-    @item = @user.items.new(item_params)
+    @item = current_user.items.new(item_params)
     if @item.save
-     redirect_to '/'
+     redirect_to root_path
     else
-      @items = @user.items.includes(:user)
-      render :index, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
