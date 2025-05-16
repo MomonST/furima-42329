@@ -8,6 +8,7 @@ FactoryBot.define do
     prefecture_id { 2 }
     delivery_time_id { 2 }
     item_price { Faker::Number.between(from: 300, to: 999_999) }  # 有効な価格範囲
+    
     association :user
     
     after(:build) do |item|
