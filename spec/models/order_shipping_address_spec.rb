@@ -4,7 +4,7 @@ RSpec.describe OrderShippingAddress, type: :model do
   before do
     user = FactoryBot.create(:user)
     item = FactoryBot.create(:item)
-    @order_shipping_address = FactoryBot.build(:order_shipping_address, user: user.id, item: item.id)
+    @order_shipping_address = FactoryBot.build(:order_shipping_address, user_id: user.id, item_id: item.id)
   end
 
   describe '購入内容の保存' do
@@ -81,13 +81,13 @@ RSpec.describe OrderShippingAddress, type: :model do
       end
 
       it 'userが空だと保存できない' do
-        @order_shipping_address.user = nil
+        @order_shipping_address.user_id = nil
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("User can't be blank")
       end
 
       it 'itemが空だと保存できない' do
-        @order_shipping_address.item = nil
+        @order_shipping_address.item_id = nil
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Item can't be blank")
       end
