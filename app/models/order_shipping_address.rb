@@ -1,6 +1,6 @@
 class OrderShippingAddress
   include ActiveModel::Model
-  attr_accessor :user, :item, :order, :postal_code, :prefecture_id, :city, :address, :building, :phone_number #token
+  attr_accessor :user, :item, :order, :postal_code, :prefecture_id, :city, :address, :building, :phone_number, :token
 
   with_options presence: true do
     validates :user
@@ -10,7 +10,7 @@ class OrderShippingAddress
     validates :city
     validates :address
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: "must be a 10 to 11 digit number using half-width characters" }
-    #validates :token
+    validates :token
   end
   
   def save

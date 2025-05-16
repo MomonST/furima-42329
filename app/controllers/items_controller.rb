@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update,:destroy] 
-  before_action :move_to_index, only: [:edit, :update, :destroy]
+  before_action :move_to_index, only: [:edit, :update, :show, :destroy]
 
   def index
     @items = Item.all.order("created_at DESC").includes(:user)
@@ -50,7 +50,7 @@ class ItemsController < ApplicationController
   end
   
   def move_to_index
-    if current_user != @item.user   #@item.order.present?は後でつける
+    if current_user != @item.user || @item.sold_out?
       redirect_to root_path
     end
   end

@@ -7,6 +7,11 @@ class Item < ApplicationRecord
   belongs_to :delivery_time
   belongs_to :user
   
+  has_one :order
+  def sold_out?
+    order.present?
+  end
+
   has_one_attached :image
 
   validates :name, presence: true
