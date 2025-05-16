@@ -20,7 +20,7 @@ RSpec.describe OrderShippingAddress, type: :model do
     end
 
     context '内容に問題がある場合' do
-      it "tokenが空では登録できないこと" do
+      it 'tokenが空では登録できないこと' do
         @order_shipping_address.token = nil
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Token can't be blank")
@@ -35,7 +35,7 @@ RSpec.describe OrderShippingAddress, type: :model do
       it '郵便番号が「3桁-4桁」の形式でないと保存できない' do
         @order_shipping_address.postal_code = '1234567'
         @order_shipping_address.valid?
-        expect(@order_shipping_address.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+        expect(@order_shipping_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
 
       it '都道府県が0だと保存できない' do
@@ -65,19 +65,19 @@ RSpec.describe OrderShippingAddress, type: :model do
       it '電話番号が9桁以下だと保存できない' do
         @order_shipping_address.phone_number = '090123456'
         @order_shipping_address.valid?
-        expect(@order_shipping_address.errors.full_messages).to include("Phone number must be a 10 to 11 digit number using half-width characters")
+        expect(@order_shipping_address.errors.full_messages).to include('Phone number must be a 10 to 11 digit number using half-width characters')
       end
 
       it '電話番号が12桁以上だと保存できない' do
         @order_shipping_address.phone_number = '090123456789'
         @order_shipping_address.valid?
-        expect(@order_shipping_address.errors.full_messages).to include("Phone number must be a 10 to 11 digit number using half-width characters")
+        expect(@order_shipping_address.errors.full_messages).to include('Phone number must be a 10 to 11 digit number using half-width characters')
       end
 
       it '電話番号にハイフンが含まれていると保存できない' do
         @order_shipping_address.phone_number = '090-1234-5678'
         @order_shipping_address.valid?
-        expect(@order_shipping_address.errors.full_messages).to include("Phone number must be a 10 to 11 digit number using half-width characters")
+        expect(@order_shipping_address.errors.full_messages).to include('Phone number must be a 10 to 11 digit number using half-width characters')
       end
 
       it 'userが空だと保存できない' do
@@ -95,9 +95,8 @@ RSpec.describe OrderShippingAddress, type: :model do
   end
 end
 
-#今回のテストコードがうまく動作しなかった原因
-#configのtest.rbに１行「config.active_job.queue_adapter = :inline」記述したら直った
-#理由として、createメソッドを使用してインスタンスの保存を行う処理はテスト用のデータベースに実際に保存をしに行く処理が発生
-#しかし、その処理速度とテストの処理のスピードが合わなくなり、時折フリーズや、mysqlのエラーが発生することがある
-#ざっくり言うと、１つ１つの実行が完了したら次の処理を動かすようにできる設定のための記述
-
+# 今回のテストコードがうまく動作しなかった原因
+# configのtest.rbに１行「config.active_job.queue_adapter = :inline」記述したら直った
+# 理由として、createメソッドを使用してインスタンスの保存を行う処理はテスト用のデータベースに実際に保存をしに行く処理が発生
+# しかし、その処理速度とテストの処理のスピードが合わなくなり、時折フリーズや、mysqlのエラーが発生することがある
+# ざっくり言うと、１つ１つの実行が完了したら次の処理を動かすようにできる設定のための記述
