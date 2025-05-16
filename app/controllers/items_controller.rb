@@ -1,10 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_item, only: [:show, :edit, :update,:destroy] 
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :move_to_index, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.all.order("created_at DESC").includes(:user)
+    @items = Item.all.order('created_at DESC').includes(:user)
   end
 
   def new
@@ -14,13 +14,13 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     if @item.save
-     redirect_to root_path
+      redirect_to root_path
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def show  
+  def show
   end
 
   def edit
@@ -42,16 +42,15 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :image, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id, :delivery_time_id, :item_price, :user).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :image, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id,
+                                 :delivery_time_id, :item_price, :user).merge(user_id: current_user.id)
   end
 
   def set_item
     @item = Item.find(params[:id])
   end
-  
+
   def move_to_index
-    if current_user != @item.user   #@item.order.present?は後でつける
-      redirect_to root_path
-    end
+    redirect_to root_path if current_user != @item.user || @item.sold_out?
   end
 end
