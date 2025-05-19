@@ -65,7 +65,7 @@ has_one :order
 | Column  | Type       | Options                        |
 | ------- | ---------- | ------------------------------ |
 | user    | references | null: false, foreign_key: true |   （購入者）
-| item    | references | null: false, foreign_key: true |  　(購入商品)
+| item    | references | null: false, foreign_key: true |   (購入商品)
 
 belongs_to :user
 belongs_to :item
@@ -76,7 +76,7 @@ has_one :shipping_address
 
 | Column        | Type       | Options     |
 | ------------- | ---------- | ----------- |
-| order         | references | null: false, foreign_key: true |
+| order         | references | null: false, foreign_key: true |    （購入者）
 | postal_code   | string     | null: false | 
 | prefecture_id | integer    | null: false |
 | city          | string     | null: false |
