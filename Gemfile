@@ -72,8 +72,8 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'unicorn', '6.1.0'
+  #pgはrenderの時だけ必要だったので、AWSの時は削除する
 end
 
 gem 'devise'
